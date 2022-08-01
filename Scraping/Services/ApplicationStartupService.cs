@@ -19,15 +19,20 @@ namespace Scraping.Services
         private IMediator mediator { get; set; }
         public ApplicationStartupService(IMediator mediator)
         {
+
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
         public async Task Start()
         {
+            
             Console.WriteLine("Test");
-            var result = await mediator.Send(new GetPagesCommand()
-            {
-                Url = "pornhub.com/pornstars"
-            });
+            
+                        var result = await mediator.Send(new GetPagesCommand()
+                            {
+                                URL = ""
+                        });
+            
+
         }
     }
 }

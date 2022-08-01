@@ -9,6 +9,6 @@ namespace Scraping.Comands
 {
     public class GetPagesCommand : IRequest<string[]>
     {
-        public  string Url { get; set; }
+        public  string URL { get; set; }
     }
 }

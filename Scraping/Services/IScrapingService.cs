@@ -11,7 +11,7 @@ namespace Scraping.Services
     {
 
         HtmlDocument GetPage(string url);
-        Task<string[]> GetLinks( HtmlDocument doc);
+        List<string> GetLinks( HtmlDocument doc);
 
 
 

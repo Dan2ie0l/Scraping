@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Scraping.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Scraping
 {
@@ -14,16 +14,35 @@ namespace Scraping
         public DbSet<PornstarModel> stars => Set<PornstarModel>();
 
 
-        public AppContext(DbContextOptions<AppContext> options)
-        : base(options)
-        {
-            Database.EnsureCreated();
-        }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            optionsBuilder.UseMySQL("server=localhost;database=visualstudio;user=root;password=admin");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<PornstarModel>(entity =>
+            {
+                entity.Property(e => e.Id);
+                entity.Property(e => e.Name).IsRequired();
+                entity.Property(e => e.Avatar).IsRequired();
+                entity.Property(e => e.Nationality).IsRequired();
+                entity.Property(e => e.Description).IsRequired();
+
+
+            });
+
+            modelBuilder.Entity<Images>(entity =>
+            {
+                entity.Property(e => e.Id);
+                entity.Property(e => e.Urls).IsRequired();
+
+            });
+
+        }
     }
 }

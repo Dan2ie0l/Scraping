@@ -10,24 +10,31 @@ namespace Scraping.Services
 {
     public class ScrapingService : IScrapingService
     {
-     
+
 
         public HtmlDocument GetPage(string url)
         {
-            WebClient cl = new WebClient();
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = new HtmlDocument();
             doc = web.Load(url);
             return doc;
         }
 
-        public Task<string[]> GetLinks(HtmlDocument doc)
+        public List<string> GetLinks(HtmlDocument doc)
         {
+            int n = 0;
+            List<string> links = new List<string>();
+
             foreach (HtmlNode node in doc.DocumentNode.SelectNodes("//a[@class='js-mxp']"))
-            {
-                Console.WriteLine("node:" + node.GetAttributeValue("href", null));
+            {   
+                    n++;
+                    links.Add(node.GetAttributeValue("href", null));
+                    Console.WriteLine("node:" + node.GetAttributeValue("href", null));
+                    Console.WriteLine(n);
+
             }
-            return null;
+
+            return links;
         }
     }
 }

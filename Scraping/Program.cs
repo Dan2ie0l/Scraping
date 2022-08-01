@@ -4,7 +4,6 @@ using Scraping.Services;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
 
-Console.WriteLine("HelloWord");
 
 var serviceProvider = new ServiceCollection()
            .AddLogging()

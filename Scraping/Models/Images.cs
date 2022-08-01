@@ -9,6 +9,6 @@ namespace Scraping.Models
     internal class Images
     {
         public int Id { get; set; }
-        public List<string> Urls { get; set; }
+        public string Urls { get; set; }
     }
 }
