@@ -14,8 +14,5 @@ namespace Scraping.Services.Interfaces
         List<string> GetLinks(HtmlDocument doc);
 
 
-
-
-
     }
 }

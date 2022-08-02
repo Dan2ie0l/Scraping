@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Scraping.Comands;
+using Scraping.Services.Interfaces;
 
 namespace Scraping.Services.Implementations
 {

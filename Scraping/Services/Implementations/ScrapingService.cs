@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Scraping.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
