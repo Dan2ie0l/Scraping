@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Scraping.Models
+namespace Scraping.Implementations
 {
-    internal class Images
+    internal class UnitOfWork
     {
-        public int Id { get; set; }
-        public string Urls { get; set; }
     }
 }

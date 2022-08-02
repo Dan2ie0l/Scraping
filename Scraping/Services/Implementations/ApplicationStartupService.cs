@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Scraping.Comands;
 
-namespace Scraping.Services
+namespace Scraping.Services.Implementations
 {
 
     public class ApplicationStartupService
@@ -24,14 +24,14 @@ namespace Scraping.Services
         }
         public async Task Start()
         {
-            
+
             Console.WriteLine("Test");
-            
-                        var result = await mediator.Send(new GetPagesCommand()
-                            {
-                                URL = ""
-                        });
-            
+
+            var result = await mediator.Send(new GetPagesCommand()
+            {
+                URL = ""
+            });
+
 
         }
     }

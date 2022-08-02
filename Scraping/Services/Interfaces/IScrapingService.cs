@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Scraping.Services
+namespace Scraping.Services.Interfaces
 {
     public interface IScrapingService
     {
 
         HtmlDocument GetPage(string url);
-        List<string> GetLinks( HtmlDocument doc);
+        List<string> GetLinks(HtmlDocument doc);
 
 
 

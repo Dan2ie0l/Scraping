@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
-using Scraping.Services;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
-
+using Scraping.Services.Implementations;
+using Scraping.Services.Interfaces;
 
 var serviceProvider = new ServiceCollection()
            .AddLogging()

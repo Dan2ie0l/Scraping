@@ -18,7 +18,7 @@ namespace Scraping
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("server=localhost;database=visualstudio;user=root;password=admin");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\ProjectModels;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,7 +27,7 @@ namespace Scraping
 
             modelBuilder.Entity<PornstarModel>(entity =>
             {
-                entity.Property(e => e.Id);
+                entity.HasKey(e => e.Id);
                 entity.Property(e => e.Name).IsRequired();
                 entity.Property(e => e.Avatar).IsRequired();
                 entity.Property(e => e.Nationality).IsRequired();
@@ -36,9 +36,9 @@ namespace Scraping
 
             });
 
-            modelBuilder.Entity<Images>(entity =>
+            modelBuilder.Entity<Image>(entity =>
             {
-                entity.Property(e => e.Id);
+                entity.HasKey(e => e.Id);
                 entity.Property(e => e.Urls).IsRequired();
 
             });

@@ -6,7 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Scraping.Services
+namespace Scraping.Services.Implementations
 {
     public class ScrapingService : IScrapingService
     {
@@ -26,15 +26,17 @@ namespace Scraping.Services
             List<string> links = new List<string>();
 
             foreach (HtmlNode node in doc.DocumentNode.SelectNodes("//a[@class='js-mxp']"))
-            {   
-                    n++;
-                    links.Add(node.GetAttributeValue("href", null));
-                    Console.WriteLine("node:" + node.GetAttributeValue("href", null));
-                    Console.WriteLine(n);
+            {
+                n++;
+                links.Add(node.GetAttributeValue("href", null));
+                Console.WriteLine("node:" + node.GetAttributeValue("href", null));
+                Console.WriteLine(n);
 
             }
 
             return links;
         }
+
+
     }
 }
