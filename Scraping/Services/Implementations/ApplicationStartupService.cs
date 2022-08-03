@@ -33,6 +33,15 @@ namespace Scraping.Services.Implementations
                 URL = ""
             });
 
+            foreach (var item in result)
+            {
+                Console.WriteLine(item);
+            }
+             /*var result2 = await mediator.Send(new DownloadCommand()
+            {
+                URL = result.ToList<string>()
+            }) ; */
+
 
         }
     }

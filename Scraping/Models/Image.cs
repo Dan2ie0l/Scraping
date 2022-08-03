@@ -9,6 +9,7 @@ namespace Scraping.Models
     public class Image
     {
         public int Id { get; set; }
-        public string Urls { get; set; }
+        public ICollection<string> Urls { get; set; } = new List<string>();
+
     }
 }

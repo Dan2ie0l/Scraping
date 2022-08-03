@@ -17,7 +17,7 @@ namespace Scraping.Commandhandlers
         {
             this.scrapingService = scrapingService;
         }
-        public async Task<string[]> Handle(GetPagesCommand request, CancellationToken cancellationToken)
+        public async Task<string[] > Handle(GetPagesCommand request, CancellationToken cancellationToken)
         {
             List<string> hrefs = new List<string>();
             var doc = scrapingService.GetPage("https://www.pornhub.com/pornstars");
@@ -32,7 +32,10 @@ namespace Scraping.Commandhandlers
             }
 
             Console.WriteLine(hrefs.Count);
-            return new string[] { };
+            string [] href = hrefs.ToArray();
+            return href;
         }
+
+       
     }
 }

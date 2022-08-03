@@ -11,7 +11,7 @@ using Scraping;
 namespace Scraping.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20220802140904_InitialCreate")]
+    [Migration("20220803143910_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

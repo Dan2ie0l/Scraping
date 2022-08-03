@@ -11,6 +11,8 @@ namespace Scraping.Interfaces
         Task<T> GetByIdAsync(object id);
         Task InsertAsync(T item);
 
+        Task InsertRangeAsync(IEnumerable<T> items);
+
         void Update(T item);
         void Delete(T item);
     }
