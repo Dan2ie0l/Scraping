@@ -37,11 +37,14 @@ namespace Scraping.Services.Implementations
             {
                 Console.WriteLine(item);
             }
-             /*var result2 = await mediator.Send(new DownloadCommand()
+             var download = await mediator.Send(new DownloadCommand()
             {
-                URL = result.ToList<string>()
-            }) ; */
-
+                URL = result
+            }) ;
+            var getinfo = await mediator.Send(new GetInfoCommand()
+            {
+                URL = result
+            });
 
         }
     }

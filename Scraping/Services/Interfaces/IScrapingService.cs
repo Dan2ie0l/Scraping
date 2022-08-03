@@ -11,7 +11,7 @@ namespace Scraping.Services.Interfaces
     {
 
         HtmlDocument GetPage(string url);
-        List<string> GetLinks(HtmlDocument doc);
+        List<string> GetLinks(HtmlDocument doc, string  nodes);
 
 
     }
