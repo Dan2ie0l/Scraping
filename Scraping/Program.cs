@@ -7,7 +7,7 @@ using Scraping.Services.Interfaces;
 
 var serviceProvider = new ServiceCollection()
            .AddLogging()
-           .AddMediatR(typeof(Program))
+           .AddMediatR(AppDomain.CurrentDomain.GetAssemblies())
            .AddSingleton<IScrapingService, ScrapingService>()
            .AddSingleton<ApplicationStartupService>()
            .BuildServiceProvider();

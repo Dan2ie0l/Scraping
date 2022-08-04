@@ -13,7 +13,7 @@ namespace Scraping.Commandhandlers
     public class DownloadCommandHandler : IRequestHandler<DownloadCommand, string[] >
     {
         private IScrapingService scrapingService { get; set; }
-        priva
+        
 
         public DownloadCommandHandler(IScrapingService scrapingService)
         {
@@ -28,7 +28,7 @@ namespace Scraping.Commandhandlers
             }
             List<string> hrefs = new List<string>();
 
-            hrefs.AddRange(scrapingService.GetLinks(doc));
+            hrefs.AddRange(scrapingService.GetLinks(doc,""));
             
             
 

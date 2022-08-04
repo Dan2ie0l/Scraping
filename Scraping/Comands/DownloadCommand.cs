@@ -10,7 +10,7 @@ namespace Scraping.Comands
     public class DownloadCommand : IRequest<string[]>
     {
        
-        public List<string> URL { get; set; }
+        public string[] URL { get; set; }
 
     }
 }

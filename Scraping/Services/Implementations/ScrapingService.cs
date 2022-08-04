@@ -38,6 +38,18 @@ namespace Scraping.Services.Implementations
             return links;
         }
 
+        public  string SelectSingleNode(HtmlDocument doc, string node)
+        {
+             string bio = "";
+
+              HtmlNode nodee = doc.DocumentNode.SelectSingleNode(node);
+              bio = (nodee.FirstChild.InnerText);
+               Console.WriteLine(bio);
+
+
+            return bio;
+        }
+
         public async Task<string[]> Download(string url)
         {
             WebClient cl = new WebClient();
@@ -59,6 +71,7 @@ namespace Scraping.Services.Implementations
 
             return null;
         }
+
         public string RandomNames()
         {
             int length = 7;
