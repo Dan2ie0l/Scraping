@@ -10,7 +10,7 @@ using Scraping.Services.Interfaces;
 
 namespace Scraping.Commandhandlers
 {
-    public class GetInfoCommandHandler : IRequestHandler<GetInfoCommand, string[] >
+    public class GetInfoCommandHandler : IRequestHandler<GetInfoCommand, string[]>
     {
         private IScrapingService scrapingService { get; set; }
 
@@ -23,25 +23,43 @@ namespace Scraping.Commandhandlers
 
         public async Task<string[]> Handle(GetInfoCommand request, CancellationToken cancellationToken)
         {
-            string node = "/html/body/div[4]/div[2]/div[4]/div/section/div[5]/div[1]/div[4]/div";
-            string node2 = "/html/body/div[4]/div[2]/div[4]/div/section/div[5]/div[1]/div[3]/div";
+            string node = "/html/body/div[4]/div[2]/div[4]/div/section/div[5]/div[1]/div[1]/div/section/div[2]";
+            string node2 = "/html/body/div[4]/div[2]/div[4]/div/section/div[5]/div[1]/div[1]/div/div[2]";
             HtmlDocument doc = new HtmlDocument();
             string bio;
-
+            HtmlNode[] nodes = null;
             List<string> texts = new List<string>();
             foreach (string item in request.URL)
             {
+
                 doc = scrapingService.GetPage("https://www.pornhub.com" + item);
-                bio= scrapingService.SelectSingleNode(doc, node, node2);
+                bio = scrapingService.SelectSingleNode(doc, node, node2);
                 texts.Add(bio);
+                nodes = scrapingService.SelectNodes(doc, "//div[@class='infoPiece']").ToArray();
+                Console.WriteLine();
+                Console.WriteLine(scrapingService.SelectSingleNode(doc, "/html/body/div[4]/div[2]/div[4]/div/section/div[2]/div[1]/div/div[1]/h1", "/html/body/div[4]/div[2]/div[4]/div/section/div[2]/div[1]/div/div[1]/h1").Trim());
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("-----------------------------------------------------------------");
+                Dictionary<string, string> info = new Dictionary<string, string>();
+
+                foreach (HtmlNode bb in nodes)
+                {
+
+                    string key = bb.FirstChild.InnerText;
+                    string value = bb.LastChild.InnerText;
+                    info.Add(key, value);
+                }
+                foreach (KeyValuePair<string, string> itm in info)
+                {
+                    Console.WriteLine(itm.Key + " " + itm.Value);
+                }
+                info.Clear();
             }
-            foreach (string text in texts)
-            {
-                Console.WriteLine(text);
-            }
-             
-            
-            return new string[] {};
+
+
+
+            return new string[] { };
         }
     }
 }

@@ -25,12 +25,12 @@ namespace Scraping.Commandhandlers
             var doc = scrapingService.GetPage("https://www.pornhub.com/pornstars");
 
             hrefs.AddRange(scrapingService.GetLinks(doc,node));
-            for (int i = 2; i < 10; i++)
+          /*  for (int i = 2; i < 3; i++)
             {
                 var doc1 = scrapingService.GetPage("https://www.pornhub.com/pornstars?page=" + i);
                 hrefs.AddRange(scrapingService.GetLinks(doc1, node));
                 Console.WriteLine("We are on page "+i);
-            }
+            }*/
             
             Console.WriteLine(hrefs.Count);
             string [] href = hrefs.ToArray();

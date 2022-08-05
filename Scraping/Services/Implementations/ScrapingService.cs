@@ -38,50 +38,41 @@ namespace Scraping.Services.Implementations
             return links;
         }
 
-        public  string SelectSingleNode(HtmlDocument doc, string node, string node2)
+        public string SelectSingleNode(HtmlDocument doc, string node, string node2)
         {
-             string bio = "";
+            string bio = "";
 
-              HtmlNode nodee = doc.DocumentNode.SelectSingleNode(node);
+            HtmlNode nodee = doc.DocumentNode.SelectSingleNode(node);
             if (nodee != null)
             {
-                try
-                {
-                    bio = (nodee.InnerText);
-                }
-                catch (NullReferenceException e)
-                {
+                bio = (nodee.InnerText);
 
-                    Console.WriteLine(e.Message); ;
-                }
             }
-            else if(node == null)
+            else if (node == null)
             {
                 nodee = doc.DocumentNode.SelectSingleNode(node2);
                 if (nodee != null)
                 {
-                    try
-                    {
-                        bio = (nodee.InnerText);
-                    }
-                    catch (NullReferenceException e)
-                    {
 
-                        Console.WriteLine(e.Message); ;
-                    }
+                    bio = (nodee.InnerText);
                 }
-               
+
             }
+
             else
             {
                 bio = "";
             }
-            
-           
-               Console.WriteLine(bio);
-
 
             return bio;
+        }
+        public HtmlNode[] SelectNodes(HtmlDocument doc, string node)
+        {
+
+            HtmlNode [] nodes = doc.DocumentNode.SelectNodes(node).ToArray();
+            
+
+            return nodes;
         }
 
         public async Task<string[]> Download(string url)

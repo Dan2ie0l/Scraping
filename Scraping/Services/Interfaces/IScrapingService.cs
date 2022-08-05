@@ -12,7 +12,7 @@ namespace Scraping.Services.Interfaces
 
         HtmlDocument GetPage(string url);
         List<string> GetLinks(HtmlDocument doc, string  nodes);
-
+        HtmlNode[] SelectNodes(HtmlDocument doc, string node);
         string SelectSingleNode(HtmlDocument doc, string node, string node2);
 
     }
