@@ -38,12 +38,46 @@ namespace Scraping.Services.Implementations
             return links;
         }
 
-        public  string SelectSingleNode(HtmlDocument doc, string node)
+        public  string SelectSingleNode(HtmlDocument doc, string node, string node2)
         {
              string bio = "";
 
               HtmlNode nodee = doc.DocumentNode.SelectSingleNode(node);
-              bio = (nodee.FirstChild.InnerText);
+            if (nodee != null)
+            {
+                try
+                {
+                    bio = (nodee.InnerText);
+                }
+                catch (NullReferenceException e)
+                {
+
+                    Console.WriteLine(e.Message); ;
+                }
+            }
+            else if(node == null)
+            {
+                nodee = doc.DocumentNode.SelectSingleNode(node2);
+                if (nodee != null)
+                {
+                    try
+                    {
+                        bio = (nodee.InnerText);
+                    }
+                    catch (NullReferenceException e)
+                    {
+
+                        Console.WriteLine(e.Message); ;
+                    }
+                }
+               
+            }
+            else
+            {
+                bio = "";
+            }
+            
+           
                Console.WriteLine(bio);
 
 

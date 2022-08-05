@@ -23,7 +23,8 @@ namespace Scraping.Commandhandlers
 
         public async Task<string[]> Handle(GetInfoCommand request, CancellationToken cancellationToken)
         {
-            string node = "body > div.wrapper > div.container > div.claimed.noBio > div > section > div.model-details.js-headerContent > div.bottomDescription.display-grid.bio.auto-columns > div.biographyAbout.column.text.js-bioAbout > div > section > div:nth-child(2)";
+            string node = "/html/body/div[4]/div[2]/div[4]/div/section/div[5]/div[1]/div[4]/div";
+            string node2 = "/html/body/div[4]/div[2]/div[4]/div/section/div[5]/div[1]/div[3]/div";
             HtmlDocument doc = new HtmlDocument();
             string bio;
 
@@ -31,7 +32,7 @@ namespace Scraping.Commandhandlers
             foreach (string item in request.URL)
             {
                 doc = scrapingService.GetPage("https://www.pornhub.com" + item);
-                bio= scrapingService.SelectSingleNode(doc, node);
+                bio= scrapingService.SelectSingleNode(doc, node, node2);
                 texts.Add(bio);
             }
             foreach (string text in texts)
