@@ -35,26 +35,28 @@ namespace Scraping.Commandhandlers
                 doc = scrapingService.GetPage("https://www.pornhub.com" + item);
                 bio = scrapingService.SelectSingleNode(doc, node, node2);
                 texts.Add(bio);
-                nodes = scrapingService.SelectNodes(doc, "//div[@class='infoPiece']").ToArray();
+                nodes = scrapingService.SelectNodes(doc, "//div[@class='infoPiece']" ).ToArray();
+                Console.WriteLine("----------------------------------------------------");
+
                 Console.WriteLine();
                 Console.WriteLine(scrapingService.SelectSingleNode(doc, "/html/body/div[4]/div[2]/div[4]/div/section/div[2]/div[1]/div/div[1]/h1", "/html/body/div[4]/div[2]/div[4]/div/section/div[2]/div[1]/div/div[1]/h1").Trim());
                 Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine("-----------------------------------------------------------------");
                 Dictionary<string, string> info = new Dictionary<string, string>();
 
                 foreach (HtmlNode bb in nodes)
                 {
-
                     string key = bb.FirstChild.InnerText;
                     string value = bb.LastChild.InnerText;
-                    info.Add(key, value);
-                }
-                foreach (KeyValuePair<string, string> itm in info)
-                {
-                    Console.WriteLine(itm.Key + " " + itm.Value);
-                }
-                info.Clear();
+                    Console.WriteLine(key + " " + value);
+                 }
+
+                /* foreach (KeyValuePair<string, string> itm in info)
+                 {
+                     Console.WriteLine(itm.Key + " " + itm.Value);
+                 }*/
+                Console.WriteLine("----------------------------------------------------");
+
+                Thread.Sleep(3000);
             }
 
 

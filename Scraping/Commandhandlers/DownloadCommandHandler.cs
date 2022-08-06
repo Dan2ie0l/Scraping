@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using System.Net;
 using MediatR;
 using Scraping.Comands;
 using Scraping.Services.Interfaces;
@@ -19,22 +20,32 @@ namespace Scraping.Commandhandlers
         {
             this.scrapingService = scrapingService;
         }
+
         public async Task<string[]> Handle(DownloadCommand request, CancellationToken cancellationToken)
         {
-            HtmlDocument doc = new HtmlDocument();
-            foreach (var item in request.URL)
+
+            var url = "https://www.pornhub.com/pornstar/riley-reid HTTP/1.1";
+
+            var req = WebRequest.Create(url);
+            req.Method = "GET";
+            try
             {
-                 doc = scrapingService.GetPage("https://www.pornhub.com"+ item);
+                using var  webResponse = req.GetResponse();
+                 using var webStream = webResponse.GetResponseStream();
+                using var reader = new StreamReader(webStream);
+                var data = reader.ReadToEnd();
+
+                Console.WriteLine(data);
             }
-            List<string> hrefs = new List<string>();
+            catch (WebException e) {
+                if (e.Message.Contains("302"))
+                    {
+                    Console.WriteLine(e.Message);
+                }
+            }
 
-            hrefs.AddRange(scrapingService.GetLinks(doc,""));
-            
-            
-
-            Console.WriteLine(hrefs.Count);
-            string[] href = hrefs.ToArray();
-
+           
+          
 
 
             return new string[] {};
