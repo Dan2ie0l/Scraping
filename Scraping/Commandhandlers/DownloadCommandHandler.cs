@@ -24,7 +24,7 @@ namespace Scraping.Commandhandlers
         public async Task<string[]> Handle(DownloadCommand request, CancellationToken cancellationToken)
         {
 
-            var url = "";
+            var url = "https://www.pornhub.com/pornstar/riley-reid";
 
              var req = WebRequest.Create(url);
              req.Method = "GET";
