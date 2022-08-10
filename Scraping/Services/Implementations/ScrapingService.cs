@@ -96,7 +96,15 @@ namespace Scraping.Services.Implementations
 
             return null;
         }
+        public  string HttpGet(string uri)
+        {
+            string content = null;
 
+            var wc = new WebClient();
+            content = wc.DownloadString(uri);
+
+            return content;
+        }
         public string RandomNames()
         {
             int length = 7;

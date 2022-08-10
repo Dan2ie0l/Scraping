@@ -24,28 +24,37 @@ namespace Scraping.Commandhandlers
         public async Task<string[]> Handle(DownloadCommand request, CancellationToken cancellationToken)
         {
 
-            var url = "https://www.pornhub.com/pornstar/riley-reid HTTP/1.1";
+            var url = "https://zappysys.com/blog/how-to-use-fiddler-to-analyze-http-web-requests/  ";
 
-            var req = WebRequest.Create(url);
-            req.Method = "GET";
-            try
-            {
-                using var  webResponse = req.GetResponse();
-                 using var webStream = webResponse.GetResponseStream();
-                using var reader = new StreamReader(webStream);
-                var data = reader.ReadToEnd();
+             var req = WebRequest.Create(url);
+             req.Method = "GET";
+             WebResponse response;
+             try
+             {
+                  response = req.GetResponse();
+                  using var webStream = response.GetResponseStream();
+                 using var reader = new StreamReader(webStream);
+                 var data = reader.ReadToEnd();
 
-                Console.WriteLine(data);
-            }
-            catch (WebException e) {
-                if (e.Message.Contains("302"))
-                    {
-                    Console.WriteLine(e.Message);
-                }
-            }
+                 Console.WriteLine(data);
+             }
+             catch (WebException e) {
+                 if (e.Message.Contains("302"))
+                     {
+                     Console.WriteLine(e.Message+ " " + e.ToString);
+                     response = e.Response;
+                     using var webStream = response.GetResponseStream();
+                     using var reader = new StreamReader(webStream);
+                     var data = reader.ReadToEnd();
+                     Console.WriteLine(data);
 
-           
-          
+                 }
+
+             }
+            
+
+           // string data =  scrapingService.HttpGet(url);
+           // Console.WriteLine(data);
 
 
             return new string[] {};
