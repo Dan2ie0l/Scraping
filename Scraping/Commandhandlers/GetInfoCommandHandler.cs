@@ -35,7 +35,7 @@ namespace Scraping.Commandhandlers
                 doc = scrapingService.GetPage("https://www.pornhub.com" + item);
                 bio = scrapingService.SelectSingleNode(doc, node, node2);
                 texts.Add(bio);
-                nodes = scrapingService.SelectNodes(doc, "//div[@class='infoPiece']" ).ToArray();
+                nodes = scrapingService.HttpGet("https://www.pornhub.com" + item).Result;
                 Console.WriteLine("----------------------------------------------------");
 
                 Console.WriteLine();
