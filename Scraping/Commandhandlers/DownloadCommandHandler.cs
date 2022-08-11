@@ -26,12 +26,14 @@ namespace Scraping.Commandhandlers
 
             var url = "https://www.pornhub.com/pornstar/riley-reid";
 
-            var data = scrapingService.HttpGet(url + "");
-            foreach (var item in data)
-            {
-                Console.WriteLine(item.InnerText);
-            }
+            var doc = scrapingService.HttpGet(url + "/photos/public").Result;
 
+            var nodeList = doc.DocumentNode.SelectNodes(".//a[contains(@href,'/album/')]");
+
+            foreach (var node in nodeList)
+            {
+                Console.WriteLine(node.GetAttributeValue("href",null));
+            }
 
             return new string[] { };
         }

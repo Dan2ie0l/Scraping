@@ -32,10 +32,10 @@ namespace Scraping.Commandhandlers
             foreach (string item in request.URL)
             {
 
-                doc = scrapingService.GetPage("https://www.pornhub.com" + item);
+                doc = scrapingService.HttpGet("https://www.pornhub.com" + item).Result;
                 bio = scrapingService.SelectSingleNode(doc, node, node2);
                 texts.Add(bio);
-                nodes = scrapingService.HttpGet("https://www.pornhub.com" + item).Result;
+                var doc1 = scrapingService.HttpGet("https://www.pornhub.com" + item).Result;
                 Console.WriteLine("----------------------------------------------------");
 
                 Console.WriteLine();

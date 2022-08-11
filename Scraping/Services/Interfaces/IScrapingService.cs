@@ -10,11 +10,10 @@ namespace Scraping.Services.Interfaces
     public interface IScrapingService
     {
 
-        HtmlDocument GetPage(string url);
         List<string> GetLinks(HtmlDocument doc, string nodes);
         HtmlNode[] SelectNodes(HtmlDocument doc, string node);
         string SelectSingleNode(HtmlDocument doc, string node, string node2);
-        Task<HtmlNode[]> HttpGet(string url);
+        Task<HtmlDocument> HttpGet(string url);
 
     }
 }

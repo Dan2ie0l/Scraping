@@ -22,7 +22,7 @@ namespace Scraping.Commandhandlers
         {
             string node = "//a[@class='js-mxp']";
             List<string> hrefs = new List<string>();
-            var doc = scrapingService.GetPage("https://www.pornhub.com/pornstars");
+            var doc = scrapingService.HttpGet("https://www.pornhub.com/pornstars").Result;
 
             hrefs.AddRange(scrapingService.GetLinks(doc,node));
           /*  for (int i = 2; i < 3; i++)

@@ -14,13 +14,6 @@ namespace Scraping.Services.Implementations
     {
 
 
-        public HtmlDocument GetPage(string url)
-        {
-            HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = new HtmlDocument();
-            doc = web.Load(url);
-            return doc;
-        }
 
         public List<string> GetLinks(HtmlDocument doc, string nodes)
         {
@@ -97,11 +90,11 @@ namespace Scraping.Services.Implementations
 
             return null;
         }
-        public async Task<HtmlNode[]> HttpGet(string url)
+        public async Task<HtmlDocument> HttpGet(string url)
         {
 
             HttpClient HttpClient = new HttpClient();
-            HtmlNode[] nodes = null;
+            HtmlDocument doc;
             using (var req = new HttpRequestMessage(HttpMethod.Get, url))
             {
                 req.Headers.Add("Accept-Encoding", "gzip, deflate, br");
@@ -117,18 +110,16 @@ namespace Scraping.Services.Implementations
                     AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
                 };
                 HttpClient = new HttpClient(httpClientHandler);
-            //    HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await HttpClient.SendAsync(req);
 
                 response.EnsureSuccessStatusCode();
                 var stream = await response.Content.ReadAsStreamAsync();
-                HtmlDocument doc = new HtmlDocument();
+                doc = new HtmlDocument();
                 doc.Load(stream);
-                 nodes = SelectNodes(doc, "//div[@class='infoPiece']");
-
+                 
             }
 
-            return nodes;
+            return doc;
         }
         public string RandomNames()
         {
