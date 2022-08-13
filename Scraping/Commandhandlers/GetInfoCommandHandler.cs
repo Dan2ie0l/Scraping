@@ -33,13 +33,13 @@ namespace Scraping.Commandhandlers
             {
 
                 doc = scrapingService.HttpGet("https://www.pornhub.com" + item).Result;
-                bio = scrapingService.SelectSingleNode(doc, node, node2);
+                bio = scrapingService.SelectSingleNode(doc, node, node2).InnerText;
                 texts.Add(bio);
                 var doc1 = scrapingService.HttpGet("https://www.pornhub.com" + item).Result;
                 Console.WriteLine("----------------------------------------------------");
 
                 Console.WriteLine();
-                Console.WriteLine(scrapingService.SelectSingleNode(doc, "/html/body/div[4]/div[2]/div[4]/div/section/div[2]/div[1]/div/div[1]/h1", "/html/body/div[4]/div[2]/div[4]/div/section/div[2]/div[1]/div/div[1]/h1").Trim());
+                Console.WriteLine(scrapingService.SelectSingleNode(doc, "/html/body/div[4]/div[2]/div[4]/div/section/div[2]/div[1]/div/div[1]/h1", "/html/body/div[4]/div[2]/div[4]/div/section/div[2]/div[1]/div/div[1]/h1").InnerText);
                 Console.WriteLine();
                 Dictionary<string, string> info = new Dictionary<string, string>();
 

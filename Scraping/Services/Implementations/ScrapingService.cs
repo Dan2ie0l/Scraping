@@ -32,33 +32,17 @@ namespace Scraping.Services.Implementations
             return links;
         }
 
-        public string SelectSingleNode(HtmlDocument doc, string node, string node2)
+        public HtmlNode SelectSingleNode(HtmlDocument doc, string node, string node2)
         {
-            string bio = "";
 
             HtmlNode nodee = doc.DocumentNode.SelectSingleNode(node);
             if (nodee != null)
             {
-                bio = (nodee.InnerText);
-
-            }
-            else if (node == null)
-            {
                 nodee = doc.DocumentNode.SelectSingleNode(node2);
-                if (nodee != null)
-                {
-
-                    bio = (nodee.InnerText);
-                }
-
             }
+          
 
-            else
-            {
-                bio = "";
-            }
-
-            return bio;
+            return nodee;
         }
         public HtmlNode[] SelectNodes(HtmlDocument doc, string node)
         {
@@ -69,19 +53,21 @@ namespace Scraping.Services.Implementations
             return nodes;
         }
 
-        public async Task<string[]> Download(string url)
+        public async Task<string[]> Download(List<string> urls, string dir)
         {
             WebClient cl = new WebClient();
-            string name = "Anne";
 
-            string root = "C:\\" + name;
+            string root = "C:\\photos";
             if (!Directory.Exists(root))
             {
                 Directory.CreateDirectory(root);
             }
             try
             {
-                cl.DownloadFile(url, Path.Combine(root, Path.GetFileName(RandomNames() + ".jpeg")));
+                foreach (var url in urls)
+                {
+                    cl.DownloadFile(url, Path.Combine(root, Path.GetFileName(RandomNames() + ".jpeg")));
+                }
             }
             catch (Exception ex)
             {

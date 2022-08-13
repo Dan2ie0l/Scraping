@@ -12,8 +12,9 @@ namespace Scraping.Services.Interfaces
 
         List<string> GetLinks(HtmlDocument doc, string nodes);
         HtmlNode[] SelectNodes(HtmlDocument doc, string node);
-        string SelectSingleNode(HtmlDocument doc, string node, string node2);
+        HtmlNode SelectSingleNode(HtmlDocument doc, string node, string node2);
         Task<HtmlDocument> HttpGet(string url);
+        Task<string[]> Download(List<string> url, string dir);
 
     }
 }

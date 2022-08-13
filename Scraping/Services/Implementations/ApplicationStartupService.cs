@@ -36,7 +36,7 @@ namespace Scraping.Services.Implementations
 
             var download = await mediator.Send(new DownloadCommand()
             {
-                URL = " "
+                URL = result
             });
             /* var getinfo = await mediator.Send(new GetInfoCommand()
              {
