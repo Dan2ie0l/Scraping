@@ -40,7 +40,7 @@ namespace Scraping.Services.Implementations
             {
                 nodee = doc.DocumentNode.SelectSingleNode(node2);
             }
-          
+
 
             return nodee;
         }
@@ -102,7 +102,7 @@ namespace Scraping.Services.Implementations
                 var stream = await response.Content.ReadAsStreamAsync();
                 doc = new HtmlDocument();
                 doc.Load(stream);
-                 
+
             }
 
             return doc;

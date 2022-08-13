@@ -68,9 +68,9 @@ namespace Scraping.Commandhandlers
                     srcs.Add(node.GetAttributeValue("src", null));
                 }
 
-               
-                    scrapingService.Download(srcs, name);
-                
+
+                scrapingService.Download(srcs, name);
+
             }
 
             return new string[] { };
