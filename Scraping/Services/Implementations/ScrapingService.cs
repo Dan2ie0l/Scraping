@@ -57,13 +57,14 @@ namespace Scraping.Services.Implementations
         {
             WebClient cl = new WebClient();
 
-            string root = "C:\\photos";
+            string root = "C:\\" + dir;
             if (!Directory.Exists(root))
             {
                 Directory.CreateDirectory(root);
             }
             try
             {
+                Thread.Sleep(2000);
                 foreach (var url in urls)
                 {
                     cl.DownloadFile(url, Path.Combine(root, Path.GetFileName(RandomNames() + ".jpeg")));

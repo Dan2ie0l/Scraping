@@ -22,56 +22,92 @@ namespace Scraping.Commandhandlers
         }
 
         public async Task<string[]> Handle(DownloadCommand request, CancellationToken cancellationToken)
+
         {
             List<string> hrefs = new List<string>();
             List<string> imghrefs = new List<string>();
             List<string> srcs = new List<string>();
-            foreach (var pornstar in request.URL)
+            foreach (var item in request.URL)
             {
-                var url = "https://www.pornhub.com" + pornstar;
 
-                var namedoc = scrapingService.HttpGet(url).Result;
-                string name = namedoc.DocumentNode.SelectSingleNode("//h1[@itemprop='name']").InnerText;
-                var doc = scrapingService.HttpGet(url + "/photos/public").Result;
 
-                var nodeList = doc.DocumentNode.SelectNodes(".//a[contains(@href,'/album/')]");
-
-                foreach (var node in nodeList)
+                if (item.Contains("pornstar"))
                 {
-                    hrefs.Add(node.GetAttributeValue("href", null));
-                    Console.WriteLine(node.GetAttributeValue("href", null));
-                }
 
-                foreach (string it in hrefs)
-                {
-                    var document = scrapingService.HttpGet("https://www.pornhub.com" + it).Result;
-                    var nodes = document.DocumentNode.SelectNodes(".//a[contains(@href,'/photo/')]");
-                    if (nodes.Count > 0)
+                    Thread.Sleep(5000);
+                    var url = "https://www.pornhub.com" + item;
+                    string h1name = "";
+                    var namedoc = scrapingService.HttpGet(url).Result;
+                    var name = namedoc.DocumentNode.SelectSingleNode(".//h1");
+                    var n = name.InnerText.Split('\t');
+                    foreach (var ittem in n)
                     {
-                        foreach (var i in nodes)
+                        if (ittem.Length > 3)
                         {
-                            imghrefs.Add(i.GetAttributeValue("href", null));
+                            h1name = ittem.Trim();
                         }
                     }
-                    else
+                    var doc = scrapingService.HttpGet(url + "/photos/public").Result;
+                    if (doc == null)
                     {
+                        doc = scrapingService.HttpGet(url + "/photos").Result;
+                    }
+
+                    var nodeList = doc.DocumentNode.SelectNodes("//div[@class='photoAlbumListBlock js_lazy_bkg']");
+
+                    foreach (var node in nodeList)
+                    {
+                        var nod = node.SelectSingleNode("./a");
+                        hrefs.Add(nod.GetAttributeValue("href", null));
+                        Console.WriteLine(nod.GetAttributeValue("href", null));
+                    }
+
+                    foreach (string it in hrefs)
+                    {
+                        var document = scrapingService.HttpGet("https://www.pornhub.com" + it).Result;
+                        var nodes = document.DocumentNode.SelectNodes(".//a[contains(@href,'/photo/')]");
+                        if (nodes.Count > 0)
+                        {
+                            foreach (var i in nodes)
+                            {
+                                imghrefs.Add(i.GetAttributeValue("href", null));
+                            }
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                        Console.WriteLine(" --------------------");
+
+                    }
+
+                    foreach (var i in imghrefs)
+                    {
+                        try
+                        {
+                            var document = scrapingService.HttpGet("https://www.pornhub.com" + i).Result;
+                            var node = scrapingService.SelectSingleNode(document, "//*[@id='photoImageSection']/div[1]/a[3]/img", "//*[@id='photoImageSection']/div[1]/a[3]/img");
+                            srcs.Add(node.GetAttributeValue("src", null));
+                        }
+                        catch (Exception e )
+                        {
+
+                            Console.WriteLine(  e.Message); 
+                        }
                         continue;
                     }
-                    Console.WriteLine(" --------------------");
 
+
+                    scrapingService.Download(srcs, h1name);
+                    imghrefs.Clear();
+                    srcs.Clear();
+                    hrefs.Clear(); 
                 }
 
-                foreach (var i in imghrefs)
-                {
-                    var document = scrapingService.HttpGet("https://www.pornhub.com" + i).Result;
-                    var node = scrapingService.SelectSingleNode(document, "//*[@id='photoImageSection']/div[1]/a[3]/img", "//*[@id='photoImageSection']/div[1]/a[3]/img");
-                    srcs.Add(node.GetAttributeValue("src", null));
-                }
-
-
-                scrapingService.Download(srcs, name);
 
             }
+
+
 
             return new string[] { };
         }
