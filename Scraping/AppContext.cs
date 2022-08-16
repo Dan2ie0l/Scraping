@@ -32,7 +32,7 @@ namespace Scraping
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Name).IsRequired();
                 entity.Property(e => e.Avatar).IsRequired();
-                entity.Property(e => e.Nationality).IsRequired();
+                entity.Property(e => e.Bio).IsRequired();
                 entity.Property(e => e.Description).IsRequired();
 
 

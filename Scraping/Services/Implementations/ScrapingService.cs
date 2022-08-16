@@ -64,7 +64,6 @@ namespace Scraping.Services.Implementations
             }
             try
             {
-                Thread.Sleep(2000);
                 foreach (var url in urls)
                 {
                     cl.DownloadFile(url, Path.Combine(root, Path.GetFileName(RandomNames() + ".jpeg")));
@@ -99,10 +98,19 @@ namespace Scraping.Services.Implementations
                 HttpClient = new HttpClient(httpClientHandler);
                 var response = await HttpClient.SendAsync(req);
 
-                response.EnsureSuccessStatusCode();
-                var stream = await response.Content.ReadAsStreamAsync();
-                doc = new HtmlDocument();
-                doc.Load(stream);
+                if (response.IsSuccessStatusCode)
+                {
+                    var stream = await response.Content.ReadAsStreamAsync();
+                    doc = new HtmlDocument();
+                    doc.Load(stream);
+                }
+                else
+                {
+                    doc = null;
+
+                    Console.WriteLine($"Request failed. Error status code: {(int)response.StatusCode}");
+                }
+                
 
             }
 

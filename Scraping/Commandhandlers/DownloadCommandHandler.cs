@@ -47,20 +47,31 @@ namespace Scraping.Commandhandlers
                             h1name = ittem.Trim();
                         }
                     }
-                    var doc = scrapingService.HttpGet(url + "/photos/public").Result;
+                    HtmlDocument doc = new HtmlDocument();
+
+                    doc = scrapingService.HttpGet(url + "/photos/public").Result;
+
+
+
                     if (doc == null)
                     {
-                        doc = scrapingService.HttpGet(url + "/photos").Result;
+                        continue;
                     }
-
                     var nodeList = doc.DocumentNode.SelectNodes("//div[@class='photoAlbumListBlock js_lazy_bkg']");
-
-                    foreach (var node in nodeList)
+                    if(nodeList != null)
                     {
-                        var nod = node.SelectSingleNode("./a");
-                        hrefs.Add(nod.GetAttributeValue("href", null));
-                        Console.WriteLine(nod.GetAttributeValue("href", null));
+                        foreach (var node in nodeList)
+                        {
+                            var nod = node.SelectSingleNode("./a");
+                            hrefs.Add(nod.GetAttributeValue("href", null));
+                            Console.WriteLine(nod.GetAttributeValue("href", null));
+                        }
                     }
+                    else
+                    {
+                        continue;
+                    }
+                    
 
                     foreach (string it in hrefs)
                     {
@@ -80,28 +91,27 @@ namespace Scraping.Commandhandlers
                         Console.WriteLine(" --------------------");
 
                     }
-
+                    Console.WriteLine(h1name);
+                    Console.WriteLine(imghrefs.Count);
                     foreach (var i in imghrefs)
                     {
-                        try
+
+                        var document = scrapingService.HttpGet("https://www.pornhub.com" + i).Result;
+                        var node = scrapingService.SelectSingleNode(document, "//*[@id='photoImageSection']/div[1]/a[3]/img", "//*[@id='photoImageSection']/div[1]/a[3]/img");
+                        if (node != null)
                         {
-                            var document = scrapingService.HttpGet("https://www.pornhub.com" + i).Result;
-                            var node = scrapingService.SelectSingleNode(document, "//*[@id='photoImageSection']/div[1]/a[3]/img", "//*[@id='photoImageSection']/div[1]/a[3]/img");
                             srcs.Add(node.GetAttributeValue("src", null));
+                            Console.WriteLine(node.GetAttributeValue("src", null));
                         }
-                        catch (Exception e )
+                        else
                         {
-
-                            Console.WriteLine(  e.Message); 
+                            continue;
                         }
-                        continue;
                     }
-
-
                     scrapingService.Download(srcs, h1name);
                     imghrefs.Clear();
                     srcs.Clear();
-                    hrefs.Clear(); 
+                    hrefs.Clear();
                 }
 
 
