@@ -36,7 +36,7 @@ namespace Scraping.Services.Implementations
         {
 
             HtmlNode nodee = doc.DocumentNode.SelectSingleNode(node);
-            if (nodee != null)
+            if (nodee == null)
             {
                 nodee = doc.DocumentNode.SelectSingleNode(node2);
             }
@@ -56,6 +56,7 @@ namespace Scraping.Services.Implementations
         public async Task<string[]> Download(List<string> urls, string dir)
         {
             WebClient cl = new WebClient();
+            ServicePointManager.DefaultConnectionLimit = 200;
 
             string root = "C:\\" + dir;
             if (!Directory.Exists(root))
